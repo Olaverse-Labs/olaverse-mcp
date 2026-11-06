@@ -39,6 +39,10 @@ claude mcp add olaverse --env OLAVERSE_API_KEY=your-key -- uvx olaverse-mcp
 }
 ```
 
+**Hosted (no install).** Olaverse also runs this server at `https://mcp.olaverselab.com/mcp` (streamable HTTP).
+Send your key with each request as `Authorization: Bearer your-key`. The hosted server takes documents as `text`,
+or as an `image` or `pdf` in base64; it doesn't read files or fetch URLs.
+
 ## Use it
 
 Ask in plain words, and the agent picks the tool:
