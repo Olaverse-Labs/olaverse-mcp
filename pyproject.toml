@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "olaverse-mcp"
-version = "0.2.0"
+version = "0.2.1"
 description = "Olaverse Lab's API as MCP tools: document extraction with calibrated confidence, decisions, language ID (608 languages), diacritics and question generation"
 readme = "README.md"
 requires-python = ">=3.10"

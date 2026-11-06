@@ -8,12 +8,12 @@
     "url": "https://github.com/Olaverse-Labs/olaverse-mcp",
     "source": "github"
   },
-  "version": "0.2.0",
+  "version": "0.2.1",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "olaverse-mcp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "runtimeHint": "uvx",
       "transport": {
         "type": "stdio"
@@ -22,6 +22,21 @@
         {
           "name": "OLAVERSE_API_KEY",
           "description": "Your Olaverse API key (console.olaverselab.com)",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.olaverselab.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer followed by your Olaverse API key (console.olaverselab.com)",
           "isRequired": true,
           "isSecret": true,
           "format": "string"
