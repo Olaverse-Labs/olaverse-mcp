@@ -67,8 +67,26 @@ def _key(ctx: Optional[Context]) -> str:
                         "OLAVERSE_API_KEY (local). Create one at https://console.olaverselab.com.")
 
 
+def _check_key_shape(key: str):
+    """Hosted mode: refuse a key that can't be an Olaverse key (a signed token, header.payload.signature, unexpired)
+    before calling the API. The hosted server shares one outbound address, and the API bans an address after a run
+    of failed logins, so mistyped keys must never reach it."""
+    import json as _json
+    parts = key.split(".")
+    try:
+        if len(parts) != 3:
+            raise ValueError
+        payload = _json.loads(base64.urlsafe_b64decode(parts[1] + "=" * (-len(parts[1]) % 4)))
+    except (ValueError, binascii.Error):
+        raise OlaverseError("That isn't an Olaverse API key: copy the key from https://console.olaverselab.com (it starts with 'eyJ').")
+    if isinstance(payload, dict) and isinstance(payload.get("exp"), (int, float)) and payload["exp"] < time.time():
+        raise OlaverseError("This Olaverse API key has expired: create a new one at https://console.olaverselab.com.")
+
+
 async def _request(ctx: Optional[Context], method: str, path: str, body: Optional[dict] = None, timeout: float = 240) -> dict:
     key = _key(ctx)
+    if HOSTED:
+        _check_key_shape(key)
     try:   # async: the hosted server shares an event loop with other requests, so it must never block it
         async with httpx.AsyncClient(timeout=timeout) as client:
             r = await client.request(method, API + path, json=body,
