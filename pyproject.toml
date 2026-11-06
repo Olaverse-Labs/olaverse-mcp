@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "olaverse-mcp"
+version = "0.1.0"
+description = "Olaverse Lab's API as MCP tools: document extraction with calibrated confidence, decisions, language ID (608 languages), diacritics and question generation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "Olaverse Ltd" }]
+keywords = ["mcp", "model-context-protocol", "document-extraction", "language-identification", "african-languages", "olaverse"]
+dependencies = ["mcp>=2.3,<3", "httpx>=0.27", "pypdf>=5"]
+
+[project.urls]
+Homepage = "https://www.olaverselab.com"
+Documentation = "https://docs.olaverselab.com"
+
+[project.scripts]
+olaverse-mcp = "olaverse_mcp.server:main"
