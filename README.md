@@ -65,3 +65,6 @@ Scanned PDFs (no text layer) aren't read directly: send their pages as JPEG or P
 ## Licence
 
 Apache-2.0.
+
+<!-- MCP registry ownership: -->
+mcp-name: io.github.Olaverse-Labs/olaverse-mcp
