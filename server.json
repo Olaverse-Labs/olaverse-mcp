@@ -2,18 +2,18 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Olaverse-Labs/olaverse-mcp",
   "title": "Olaverse Lab",
-  "description": "Document extraction with calibrated confidence, decisions, language ID in 608 languages, diacritics.",
+  "description": "Document extraction, decisions, language ID (608), diacritics, questions in 324 languages.",
   "websiteUrl": "https://www.olaverselab.com",
   "repository": {
     "url": "https://github.com/Olaverse-Labs/olaverse-mcp",
     "source": "github"
   },
-  "version": "0.2.1",
+  "version": "0.3.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "olaverse-mcp",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "runtimeHint": "uvx",
       "transport": {
         "type": "stdio"

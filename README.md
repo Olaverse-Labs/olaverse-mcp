@@ -1,7 +1,7 @@
 # Olaverse MCP server
 
 [Olaverse Lab](https://www.olaverselab.com)'s API as tools for AI agents: Claude, Cursor and any other MCP client.
-The models are small, task-specific and strongest on English and African-language text.
+The models are small, task-specific and multilingual: built for every language, including the ones others skip.
 
 | Tool | What it does |
 |---|---|
@@ -10,7 +10,7 @@ The models are small, task-specific and strongest on English and African-languag
 | `decide` | Typed questions about a message, ticket or record (yes/no, choice, score), with calibrated probabilities. 19 languages. |
 | `detect_language` | The language of a text, among 608 (built African-first, good on very short text). |
 | `restore_diacritics` | Puts back tone marks, accents and Arabic vowel marks in 11 languages, including Yorùbá, Igbo, Hausa and Arabic. |
-| `generate_questions` | Search-style questions a passage answers, in the passage's own language (25 languages). |
+| `generate_questions` | The questions a passage answers, in 324 languages, in its own language or another; `n` 1 to 5 or `"auto"`. |
 
 ## Set up
 

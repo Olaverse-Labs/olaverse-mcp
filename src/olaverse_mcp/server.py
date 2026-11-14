@@ -17,7 +17,7 @@ import os
 import asyncio
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 import httpx
 from mcp.server.mcpserver import Context, MCPServer
@@ -34,12 +34,12 @@ server = MCPServer(
     title="Olaverse Lab",
     website_url="https://www.olaverselab.com",
     instructions=(
-        "Olaverse Lab's models, strongest on English and African-language text. extract_document turns a document "
+        "Olaverse Lab's specialist models for many languages, including the ones others skip. extract_document turns a document "
         "(text, a JPEG/PNG image, or a PDF) into JSON from a template and gives a calibrated confidence for every "
         "field: accept fields at 0.95 or above, check the rest. decide answers typed questions about a message or "
         "record with calibrated probabilities. detect_language covers 608 languages, restore_diacritics puts back "
-        "tone marks and accents in 11 languages, generate_questions writes search-style questions a passage "
-        "answers, in the passage's own language. Every call is billed to the user's API key."),
+        "tone marks and accents in 11 languages, generate_questions writes the questions a passage answers, in 324 "
+        "languages, in its own language or another. Every call is billed to the user's API key."),
 )
 
 
@@ -231,13 +231,22 @@ async def restore_diacritics(text: str, language: str, ctx: Context = None) -> d
 
 
 @server.tool()
-async def generate_questions(passage: str, n: int = 3, language: Optional[str] = None, ctx: Context = None) -> dict:
-    """Write n natural, search-style questions that a passage answers, in the passage's own language (25 languages).
+async def generate_questions(passage: str, n: Union[int, str] = 3, language: Optional[str] = None,
+                             question_language: Optional[str] = None, ctx: Context = None) -> dict:
+    """Write the questions a passage answers (MIST-QG-1.1, passages in 324 languages).
 
-    Useful for FAQs, study cards and search or RAG training data. passage: up to 8,000 characters.
+    Useful for FAQs, study cards and search or RAG training data. passage: up to 8,000 characters, best under 2,000.
+    n: 1 to 5, or "auto" to write as many as the passage supports. language: the passage's language (detected when
+    left out). question_language: write the questions in another language: English or French for any passage, or one
+    of 30 widely spoken languages (Spanish, Hindi, Chinese, Swahili, Yoruba, Amharic...) for an English or French
+    passage or one in those 30.
     """
-    return await _request(ctx, "POST", "/v1/questions/generate",
-                    {"passage": passage, "n": n, **({"language": language} if language else {})})
+    body = {"passage": passage, "n": n}
+    if language:
+        body["language"] = language
+    if question_language:
+        body["question_language"] = question_language
+    return await _request(ctx, "POST", "/v1/questions/generate", body)
 
 
 def http_app(allowed_hosts: Optional[list] = None, path: str = "/mcp"):
